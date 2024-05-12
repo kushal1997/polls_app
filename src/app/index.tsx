@@ -1,20 +1,46 @@
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabsee";
 
-const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
+// const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
 export default function HomeScreen() {
+  const [polls,setPolls]=useState([]);
+
+  useEffect(()=>{
+const fetchPolls=async()=>{
+ 
+let { data, error } = await supabase
+.from('polls')
+.select('*');
+
+if(error){
+  Alert.alert("Error fetching data");
+}
+console.log(data)
+setPolls(data);
+        
+}
+fetchPolls()
+  },[])
   return (
     <>
       <Stack.Screen
         options={{
           title: "Polls",
 
+          // headerRight: () => (
+          //   <Link href={"/polls/new"}>
+          //     <Entypo name="squared-plus" size={24} color="black" />
+          //   </Link>
+          // ),
+
+          //another way to do the above one
+
           headerRight: () => (
-            <Link href={"/polls/new"}>
-              <Entypo name="squared-plus" size={24} color="black" />
-            </Link>
+            <Entypo onPress={()=>router.push('polls/new')} name="squared-plus" size={24} color="black" />
           ),
         }}
       />
