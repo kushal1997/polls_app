@@ -1,41 +1,44 @@
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-const polls = [1, 2, 3];
+const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
 export default function HomeSxreen() {
   return (
-  <>
-  <Stack.Screen  options={{
-          title: 'Polls',
+    <>
+      <Stack.Screen
+        options={{
+          title: "Polls",
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: "#f4511e",
           },
-          headerTintColor: '#fff',
+          headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-        }}/>
-  <FlatList
+        }}
+      />
+      <FlatList
         data={polls}
         contentContainerStyle={styles.container}
-        renderItem={() => (
-          <View style={styles.pollContainer}>
-            <Text style={styles.pollText}>Example Poll Question</Text>
-          </View>
+        renderItem={({ item }) => (
+          <Link href={`/polls/${item.id}`} style={styles.pollContainer}>
+            <Text style={styles.pollText}>
+              {item.id}: Example Poll Question
+            </Text>
+          </Link>
         )}
       />
-  </>
-      
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   
+
     padding: 10,
-    gap: 5 ,
+    gap: 5,
   },
   pollContainer: {
     backgroundColor: "#fff",
