@@ -19,7 +19,7 @@ let { data, error } = await supabase
 if(error){
   Alert.alert("Error fetching data");
 }
-console.log(data)
+// console.log(data)
 setPolls(data);
         
 }
@@ -30,7 +30,7 @@ fetchPolls()
       <Stack.Screen
         options={{
           title: "Polls",
-
+          headerTitleAlign: "center",
           // headerRight: () => (
           //   <Link href={"/polls/new"}>
           //     <Entypo name="squared-plus" size={24} color="black" />
@@ -42,6 +42,9 @@ fetchPolls()
           headerRight: () => (
             <Entypo onPress={()=>router.push('polls/new')} name="squared-plus" size={24} color="black" />
           ),
+          headerLeft: () => (
+            <Entypo onPress={()=>router.push('/profile')} name="user" size={24} color="black" />
+          ),
         }}
       />
       <FlatList
@@ -50,7 +53,7 @@ fetchPolls()
         renderItem={({ item }) => (
           <Link href={`/polls/${item.id}`} style={styles.pollContainer}>
             <Text style={styles.pollText}>
-              {item.id}: Example Poll Question
+              {item.id}: {item.question}
             </Text>
           </Link>
         )}
