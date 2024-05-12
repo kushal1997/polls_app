@@ -3,13 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../../lib/supabsee";
 import { Alert } from "react-native";
+import { Poll } from "../../types/db";
 
-type Poll = {
-    id: number;
-    question: string;
-    options: string[];
-    // Add more properties as needed
-  };
   
   type AuthContext = {
     session: Session | null;
