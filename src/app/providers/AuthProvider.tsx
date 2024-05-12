@@ -11,6 +11,7 @@ import { Poll } from "../../types/db";
     user: User | null;
     polls: Poll[];
     fetchPolls: () => Promise<void>;
+    isAuthenticaed:boolean;
   };
   
   const AuthContext = createContext<AuthContext>({
@@ -18,6 +19,7 @@ import { Poll } from "../../types/db";
     user: null,
     polls: [],
     fetchPolls: async () => {}, // Empty async function as default
+    isAuthenticaed:false,
   });
   
 export default function AuthProvider({ children }) {
@@ -28,6 +30,9 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      if(!session){
+        supabase.auth.signInAnonymously();
+      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -52,7 +57,7 @@ export default function AuthProvider({ children }) {
   };
   
   return (
-    <AuthContext.Provider value={{ session, user: session?.user, polls,fetchPolls}}>
+    <AuthContext.Provider value={{ session, user: session?.user, polls,fetchPolls, isAuthenticaed : !!session?.user && !session.user.is_anonymous}}>
       {children}
     </AuthContext.Provider>
   );

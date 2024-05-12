@@ -67,6 +67,9 @@ const PollDetails = () => {
     };
 
     const fetchUserData=async()=>{
+      if(!user){
+        return;
+      }
       try {
         const { data, error } = await supabase
           .from("votes")

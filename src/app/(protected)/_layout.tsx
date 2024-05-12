@@ -4,8 +4,8 @@ import { Redirect, Slot } from 'expo-router'
 import { useAuth } from '../providers/AuthProvider';
 
 const ProtectedLayout = () => {
-    const { session, user } = useAuth();
-    if(!user){
+    const { session, user,isAuthenticaed } = useAuth();
+    if(!isAuthenticaed){
       return <Redirect href={"/login"}/>
     }
   return (
