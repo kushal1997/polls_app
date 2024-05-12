@@ -47,10 +47,10 @@ export default function HomeScreen() {
       <FlatList
         data={polls}
         contentContainerStyle={styles.container}
-        renderItem={({ item }) => (
+        renderItem={({ item ,index}) => (
           <Link href={`/polls/${item.id}`} style={styles.pollContainer}>
             <Text style={styles.pollText}>
-              {item.id}: {item.question}
+              {index+1}: {item.question}
             </Text>
           </Link>
         )}
