@@ -4,27 +4,14 @@ import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabsee";
+import { useAuth } from "./providers/AuthProvider";
 
 // const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
 export default function HomeScreen() {
-  const [polls,setPolls]=useState([]);
-
-  useEffect(()=>{
-const fetchPolls=async()=>{
- 
-let { data, error } = await supabase
-.from('polls')
-.select('*');
-
-if(error){
-  Alert.alert("Error fetching data");
-}
-// console.log(data)
-setPolls(data);
-        
-}
-fetchPolls()
-  },[])
+  const { polls, fetchPolls } = useAuth();
+  useEffect(() => {
+    fetchPolls();
+  }, []);
   return (
     <>
       <Stack.Screen
@@ -40,10 +27,20 @@ fetchPolls()
           //another way to do the above one
 
           headerRight: () => (
-            <Entypo onPress={()=>router.push('polls/new')} name="squared-plus" size={24} color="black" />
+            <Entypo
+              onPress={() => router.push("polls/new")}
+              name="squared-plus"
+              size={24}
+              color="black"
+            />
           ),
           headerLeft: () => (
-            <Entypo onPress={()=>router.push('/profile')} name="user" size={24} color="black" />
+            <Entypo
+              onPress={() => router.push("/profile")}
+              name="user"
+              size={24}
+              color="black"
+            />
           ),
         }}
       />
