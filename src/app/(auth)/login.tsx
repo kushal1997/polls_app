@@ -9,6 +9,7 @@ import {
   Text,
 } from "react-native";
 import { supabase } from "../../lib/supabsee";
+import { Stack } from "expo-router";
 // import { Button, Input } from 'react-native-elements'
 
 // Tells Supabase Auth to continuously refresh the session automatically if
@@ -57,6 +58,7 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{title:"Login"}}/>
       <Text style={{ fontWeight: "500" }}>Sign In Or Create an account</Text>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TextInput
